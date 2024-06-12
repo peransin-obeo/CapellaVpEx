@@ -1,0 +1,39 @@
+/*******************************************************************************
+
+  Copyright (c) 2024 Obeo. All rights reserved.
+
+  Contributors: 
+    Obeo - initial API and implementation.
+
+ *******************************************************************************/
+target "Capella Viewpoint Extension tools - Dev EMF" 
+
+//
+// Components used only in development env.
+// 
+
+with requirements
+
+location eclipse "https://download.eclipse.org/releases/2021-06/" {
+// Following dependencies are already required by runtime or tests
+// But they are also required for tools.
+
+	org.eclipse.pde.feature.group 
+	// +-> *.layout.spy
+	org.eclipse.xtext.redist.feature.group
+
+}
+
+// org.eclipse.sirius.editor
+location sirius "https://download.eclipse.org/sirius/updates/releases/6.6.0/2020-09/" {
+	
+	// Includes Odesign edit, Sirius interpreter view and Odesign reload 
+	org.eclipse.sirius.specifier.ide.ui.feature.group
+	org.eclipse.sirius.specifier.ide.ui.aql.feature.group
+	org.eclipse.sirius.specifier.ide.ui.acceleo.feature.group
+	org.eclipse.sirius.specifier.properties.feature.feature.group
+	// Include 'Export diagram as ELK'
+	org.eclipse.sirius.diagram.elk.sdk.feature.feature.group
+}
+
+

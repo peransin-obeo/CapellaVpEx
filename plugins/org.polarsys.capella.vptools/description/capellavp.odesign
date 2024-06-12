@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:properties="http://www.eclipse.org/sirius/properties/1.0.0" xmlns:tool="http://www.eclipse.org/sirius/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" name="capellavp" version="12.0.0.2017041100">
+  <ownedViewpoints name="CapellaVp" modelFileExtension="ecore xcore ecorebin">
+    <ownedRepresentationExtensions xsi:type="description_1:DiagramExtensionDescription" name="EntitiesDiagramExtension" viewpointURI="viewpoint:/org.eclipse.emf.ecoretools.design/Design" representationName="Entities">
+      <metamodel href="http://www.eclipse.org/sirius/diagram/1.1.0#/"/>
+      <metamodel href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+      <metamodel href="http://www.eclipse.org/emf/2002/GenModel#/"/>
+      <layers name="Capella Extension" label="%capellavp.entities.layer" activeByDefault="true">
+        <edgeMappings name="emdeExtension" deletionDescription="//@ownedViewpoints[name='CapellaVp']/@ownedRepresentationExtensions[name='EntitiesDiagramExtension']/@layers[name='Capella%20Extension']/@toolSections.1/@ownedTools[name='emdeExtensionDel']" targetFinderExpression="aql:self.eAnnotations ->select(it | it.source = 'http://www.polarsys.org/kitalpha/emde/1.0.0/constraintMapping') .getEmdeAnnotationElement()">
+          <sourceMapping xsi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
+          <targetMapping xsi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
+          <style targetArrow="OutputFillClosedArrow" routingStyle="manhattan" endsCentering="Both">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          </style>
+        </edgeMappings>
+        <toolSections name="Existing Elements">
+          <ownedTools xsi:type="tool:ToolDescription" name="HideContent" label="Hide content" precondition="aql:element.oclIsKindOf(ecore::EClass) and elementView.oclIsKindOf(diagram::DNodeList)" forceRefresh="true" iconPath="/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="var:elementView">
+                <subModelOperations xsi:type="tool:For" expression="aql:self.ownedElements ->filter(diagram::DNodeListElement) ->select(it | not it.graphicalFilters ->exists(f | f.oclIsKindOf(diagram::HideFilter)))">
+                  <subModelOperations xsi:type="tool:CreateInstance" typeName="diagram::HideFilter" referenceName="graphicalFilters"/>
+                </subModelOperations>
+                <subModelOperations xsi:type="tool:For" expression="aql:self.outgoingEdges ->select(it | it.target.oclIsKindOf(ecore::EReference))">
+                  <subModelOperations xsi:type="tool:CreateInstance" typeName="diagram::HideFilter" referenceName="graphicalFilters"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:ToolDescription" name="ShowContent" label="Show content" precondition="aql:element.oclIsKindOf(ecore::EClass) and elementView.oclIsKindOf(diagram::DNodeList)" forceRefresh="true" iconPath="/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="var:elementView">
+                <subModelOperations xsi:type="tool:For" expression="aql:self.ownedElements ->filter(diagram::DNodeListElement) .graphicalFilters ->filter(diagram::HideFilter)">
+                  <subModelOperations xsi:type="tool:RemoveElement"/>
+                </subModelOperations>
+                <subModelOperations xsi:type="tool:For" expression="aql:self.outgoingEdges ->select(it | it.target.oclIsKindOf(ecore::EReference)) .graphicalFilters ->filter(diagram::HideFilter)">
+                  <subModelOperations xsi:type="tool:RemoveElement"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:OperationAction" name="Show Extended Classes" forceRefresh="true" icon="/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif">
+            <view name="views"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool:Let" variableName="classes" valueExpression="aql:diagram.getDisplayedEClassifiers()->filter(ecore::EClass)">
+                <subModelOperations xsi:type="tool:For" expression="aql:classes.eAnnotations ->select(it | it.source = 'http://www.polarsys.org/kitalpha/emde/1.0.0/constraintMapping') .getEmdeAnnotationElement() - classes">
+                  <subModelOperations xsi:type="tool:ChangeContext" browseExpression="service:markForAutosize">
+                    <subModelOperations xsi:type="tool_1:CreateView" containerViewExpression="aql:diagram">
+                      <mapping xsi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
+                    </subModelOperations>
+                  </subModelOperations>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="Relation">
+          <ownedTools xsi:type="tool_1:EdgeCreationDescription" name="emdeExtensionCreate" label="Extension" precondition="aql:preTarget.eAllSuperTypes->exists(it | it.name = 'ExtensibleElement') and not preSource.eAnnotations ->select(it | it.source = 'http://www.polarsys.org/kitalpha/emde/1.0.0/constraintMapping') .getEmdeAnnotationElement() ->includes(preTarget)" edgeMappings="//@ownedViewpoints[name='CapellaVp']/@ownedRepresentationExtensions[name='EntitiesDiagramExtension']/@layers[name='Capella%20Extension']/@edgeMappings[name='emdeExtension']" iconPath="/org.polarsys.capella.vptools/icons/extension.png" connectionStartPrecondition="aql:not preSource.isInLibrary()">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="aql:source.addEmdeExtensions(target)"/>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool_1:DeleteElementDescription" name="emdeExtensionDel">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <containerView name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool:For" expression="aql:let target = view.targetNode.target in view.sourceNode.target.eAnnotations ->select(it | it.isEmdeConstraintExtensionOf(target) or it.isEmdeMappingExtensionOf(target))">
+                <subModelOperations xsi:type="tool:RemoveElement"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <decorationDescriptionsSet>
+          <decorationDescriptions xsi:type="description_1:MappingBasedDecoration" name="ExtensionHint" position="NORTH_EAST" distributionDirection="HORIZONTAL" preconditionExpression="aql:self.isEmdeExtensionClass()" imageExpression="/org.polarsys.capella.vptools/icons/extension.png">
+            <mappings xsi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
+          </decorationDescriptions>
+        </decorationDescriptionsSet>
+        <customization>
+          <vsmElementCustomizations xsi:type="description:VSMElementCustomization" predicateExpression="aql:self.isCapellaEcore(null)">
+            <featureCustomizations xsi:type="description:EReferenceCustomization" referenceName="foregroundColor" value="//@userColorsPalettes[name='CapellaVpColors']/@entries[name='CAPVP_Common_Class']">
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.0/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.1/@style"/>
+            </featureCustomizations>
+          </vsmElementCustomizations>
+          <vsmElementCustomizations xsi:type="description:VSMElementCustomization" predicateExpression="aql:self.isCapellaEcore('OperationalAnalysis')">
+            <featureCustomizations xsi:type="description:EReferenceCustomization" referenceName="foregroundColor" value="//@userColorsPalettes[name='CapellaVpColors']/@entries[name='CAPVP_OperationalAnalysis_Class']">
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.0/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.1/@style"/>
+            </featureCustomizations>
+          </vsmElementCustomizations>
+          <vsmElementCustomizations xsi:type="description:VSMElementCustomization" predicateExpression="aql:self.isCapellaEcore('ContextArchitecture')">
+            <featureCustomizations xsi:type="description:EReferenceCustomization" referenceName="foregroundColor" value="//@userColorsPalettes[name='CapellaVpColors']/@entries[name='CAPVP_ContextArchitecture_Class']">
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.0/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.1/@style"/>
+            </featureCustomizations>
+          </vsmElementCustomizations>
+          <vsmElementCustomizations xsi:type="description:VSMElementCustomization" predicateExpression="aql:self.isCapellaEcore('LogicalArchitecture')">
+            <featureCustomizations xsi:type="description:EReferenceCustomization" referenceName="foregroundColor" value="//@userColorsPalettes[name='CapellaVpColors']/@entries[name='CAPVP_LogicalArchitecture_Class']">
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.0/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.1/@style"/>
+            </featureCustomizations>
+          </vsmElementCustomizations>
+          <vsmElementCustomizations xsi:type="description:VSMElementCustomization" predicateExpression="aql:self.isCapellaEcore('PhysicalArchitecture')">
+            <featureCustomizations xsi:type="description:EReferenceCustomization" referenceName="foregroundColor" value="//@userColorsPalettes[name='CapellaVpColors']/@entries[name='CAPVP_PhysicalArchitecture_Class']">
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.0/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.1/@style"/>
+            </featureCustomizations>
+          </vsmElementCustomizations>
+          <vsmElementCustomizations xsi:type="description:VSMElementCustomization" predicateExpression="aql:self.isCapellaEcore('EPBSArchitecture')">
+            <featureCustomizations xsi:type="description:EReferenceCustomization" referenceName="foregroundColor" value="//@userColorsPalettes[name='CapellaVpColors']/@entries[name='CAPVP_EPBSArchitecture_Class']">
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.0/@style"/>
+              <appliedOn href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.1/@style"/>
+            </featureCustomizations>
+          </vsmElementCustomizations>
+        </customization>
+      </layers>
+    </ownedRepresentationExtensions>
+    <ownedJavaExtensions qualifiedClassName="org.polarsys.capella.vptools.VpToolsServices"/>
+    <ownedJavaExtensions qualifiedClassName="org.polarsys.capella.vptools.VpGenerationServices"/>
+  </ownedViewpoints>
+  <userColorsPalettes name="CapellaVpColors">
+    <entries xsi:type="description:UserFixedColor" red="169" green="204" blue="227" name="CAPVP_Common_Class"/>
+    <entries xsi:type="description:UserFixedColor" red="255" green="223" blue="239" name="CAPVP_OperationalAnalysis_Class"/>
+    <entries xsi:type="description:UserFixedColor" red="217" green="196" blue="215" name="CAPVP_ContextArchitecture_Class"/>
+    <entries xsi:type="description:UserFixedColor" red="204" green="242" blue="166" name="CAPVP_LogicalArchitecture_Class"/>
+    <entries xsi:type="description:UserFixedColor" red="194" green="239" blue="255" name="CAPVP_PhysicalArchitecture_Class"/>
+    <entries xsi:type="description:UserFixedColor" red="253" green="206" blue="137" name="CAPVP_EPBSArchitecture_Class"/>
+  </userColorsPalettes>
+  <extensions xsi:type="properties:ViewExtensionDescription" name="CapellaVpProperties">
+    <metamodels href="http://www.eclipse.org/sirius/diagram/1.1.0#/"/>
+    <metamodels href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+    <categories name="Default">
+      <overrides xsi:type="properties:PageOverrideDescription" name="vp_generation">
+        <actions tooltipExpression="Generate Viewpoint Models" imageExpression="/org.polarsys.capella.vptools/Viewpoint.gif">
+          <initialOperation>
+            <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="aql:self.eContainerOrSelf(ecore::EPackage).generateViewpoint( self.eInverse() ->select( it | it.eClass().ePackage.nsURI = 'http://www.eclipse.org/emf/2002/GenModel') .eContainerOrSelf(genmodel::GenModel)->asSet() .eInverse(loophole::GenGapModel)->asSet() )"/>
+          </initialOperation>
+        </actions>
+        <overrides href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@extensions.0/@categories.0/@pages.4"/>
+      </overrides>
+    </categories>
+  </extensions>
+</description:Group>

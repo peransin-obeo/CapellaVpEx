@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.obeonetwork.mbse.capella.vpx.design.tool;singleton:=true
+Automatic-Module-Name: com.obeonetwork.mbse.capella.vpx.design.tool
+Bundle-Version: 1.0.0.qualifier
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Fragment-Host: com.obeonetwork.mbse.capella.vpx.design
+Require-Bundle: 
+ org.mypsycho.emf.modit,
+ org.mypsycho.emf.modit.sirius,
+ org.eclipse.xtext.xbase,
+ org.eclipse.xtend.lib.macro,
+ org.eclipse.xtend.lib,
+ org.junit,
+ org.apache.commons.lang
+Export-Package: 
+ com.obeonetwork.mbse.capella.vpx.design.description,
+ com.obeonetwork.mbse.capella.vpx.design.tool

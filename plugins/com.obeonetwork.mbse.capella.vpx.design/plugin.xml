@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.sirius.componentization">
+    <component
+        id="com.obeonetwork.mbse.capella.vpx.design"
+        class="com.obeonetwork.mbse.capella.vpx.design.Activator"
+        name="CapellaVpEx" />
+  </extension>
+
+  <extension point="org.eclipse.sirius.sessionManagerListener">
+    <listener class="com.obeonetwork.mbse.capella.vpx.design.CapellaModelAccessor" />
+  </extension>
+</plugin>

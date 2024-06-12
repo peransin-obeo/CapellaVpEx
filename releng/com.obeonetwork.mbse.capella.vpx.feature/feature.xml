@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.obeonetwork.mbse.capella.vpx.feature"
+      label="Capella Viewpoint Extension tools Feature"
+      version="1.0.0.qualifier">
+
+   <description url="%descriptionURL">
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin id="com.obeonetwork.mbse.capella.vpx.design" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+
+</feature>

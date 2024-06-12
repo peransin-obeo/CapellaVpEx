@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+  <extension point="org.eclipse.emf.validation.constraintProviders">
+  	
+  	<!--
+  	Category must start with: "capella.category"
+  	See org.polarsys.capella.core.validation.filter.CapellaConstraintFilter
+  	Created by org.polarsys.capella.core.validation.CapellaValidationActivator.start(BundleContext)
+  	-->
+  	<category
+         id="CapellaVpEx/validation"
+         name="%constraint.category.name" />
+
+    <constraintProvider
+            cache="true"
+            class="com.obeonetwork.mbse.capella.vpx.validation.CpxConstraintsGroup"
+            mode="Batch">
+        <package namespaceUri="https://www.ObeoDev.com/modelling/CapellaVpEx/emf" />
+    </constraintProvider>
+
+  </extension>
+
+</plugin>

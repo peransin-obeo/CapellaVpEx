@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+    Copyright (c) 2024 Obeo. All rights reserved.
+    
+    Contributors: 
+      Obeo - initial API and implementation.
+-->
+<project>
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- not inheriting parent to avoid compilation -->
+	<groupId>com.obeonetwork.mbse.capella.vpx</groupId>
+	<version>1.0.0-SNAPSHOT</version>
+
+	<artifactId>com.obeonetwork.mbse.capella.vpx.design.tool</artifactId>
+	<packaging>pom</packaging>
+	<name>Capella Viewpoint Extension tools Design Tools</name>
+
+</project>

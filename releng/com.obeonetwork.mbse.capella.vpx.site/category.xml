@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="com.obeonetwork.mbse.capella.vpx.feature">
+      <category name="com.obeonetwork.mbse.capella.vpx.default.category"/>
+   </feature>
+   
+   <category-def name="com.obeonetwork.mbse.capella.vpx.default.category" label="Capella Viewpoint Extension tools by Obeo">
+      <description>
+        Capella Viewpoint Extension tools
+      </description>
+   </category-def>
+</site>

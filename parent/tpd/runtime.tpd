@@ -1,0 +1,30 @@
+/*******************************************************************************
+
+  Copyright (c) 2024 Obeo. All rights reserved.
+
+  Contributors: 
+    Obeo - initial API and implementation.
+
+ *******************************************************************************/
+target "Capella Viewpoint Extension tools - Runtime"
+
+with requirements
+environment JavaSE-11
+
+include "runtime_platform.tpd"
+
+location eclipse "https://download.eclipse.org/releases/2021-06/" {
+	// Ecoretools is needed to edit Viewpoint model.
+	org.eclipse.emf.ecoretools.design.feature.group
+}
+
+location emfloophole "http://mbarbero.github.io/emf-loophole/2.9/" {
+	// Required for generation.
+	org.eclipselabs.emf.loophole.feature.group
+}
+
+location eclipse "https://download.eclipse.org/releases/2021-06/" {
+	// Required for custom generators.
+	org.eclipse.xtend.sdk.feature.group
+	org.eclipse.xtext.sdk.feature.group
+}

@@ -1,0 +1,5 @@
+Create stub for
+
+ . acceptance.adoc
+ . installation.adoc
+ . specification.adoc

@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Automatic-Module-Name: com.obeonetwork.mbse.capella.vpx.design
+Bundle-SymbolicName: com.obeonetwork.mbse.capella.vpx.design;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: com.obeonetwork.mbse.capella.vpx.design.Activator
+Bundle-ClassPath: .
+Require-Bundle: 
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.sirius,
+ org.eclipse.sirius.properties.ext.widgets.reference,
+ org.eclipse.sirius.properties,
+ org.eclipse.sirius.common.acceleo.aql,
+ org.eclipse.emf.codegen.ecore,
+ org.eclipse.emf.codegen.ecore.ui,
+ org.eclipselabs.emf.loophole,
+ org.eclipse.pde.core,
+ org.eclipse.debug.core,
+ org.eclipse.ui.console,
+ org.eclipse.emf.transaction,
+ org.eclipse.emf.ecoretools.design,
+ org.eclipse.emf.codegen.ecore
+Export-Package: 
+ com.obeonetwork.mbse.capella.vpx.design

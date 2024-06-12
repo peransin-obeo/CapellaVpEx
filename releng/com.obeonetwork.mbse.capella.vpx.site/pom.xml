@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+	Copyright (c) 2024 Obeo. All rights reserved.
+	Contributors: 
+	  Obeo - initial API and implementation.
+-->
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.obeonetwork.mbse.capella.vpx</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../../parent</relativePath>
+	</parent>
+
+	<artifactId>com.obeonetwork.mbse.capella.vpx.site</artifactId>
+	<packaging>eclipse-repository</packaging>
+	<name>Capella Viewpoint Extension tools Update-Site</name>
+
+
+	<properties>
+		<root.path>../..</root.path>
+		<tpd.path>parent/tpd</tpd.path>
+		<docs.path>docs/dev</docs.path>
+
+<!-- 
+Repository default path for archive is defined by in:
+https://github.com/eclipse/tycho/blob/tycho-2.3.0/tycho-p2/tycho-p2-repository-plugin/src/main/java/org/eclipse/tycho/plugins/p2/repository/AbstractRepositoryMojo.java
+-->
+
+		<repo.outputDirectory>${project.build.directory}/repository</repo.outputDirectory>
+
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-repository-plugin</artifactId>
+				<configuration>
+					<!-- 
+					in archive-repository, 
+					use tycho version 
+					from tycho-packaging:build-qualifier-aggregator
+					-->
+						<finalName>${project.artifactId}-${qualifiedVersion}</finalName> <!-- default is ${project.build.finalName} -->
+					</configuration>
+			</plugin>
+		
+		<!-- 
+			Lifecycle hint on 'eclipse-repository' :
+			Explicit 'prepare-package' executions happen after built-in 'tycho::assemble-repository' call
+			and before 'tycho::assemble-repository' call 
+		-->
+		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>publish-tpd</id>
+						<phase>prepare-package</phase>
+						<goals><goal>copy-resources</goal></goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${root.path}/${tpd.path}</directory>
+									<includes>
+										<include>**/*.tpd</include>
+									</includes>
+								</resource>
+							</resources>
+							<outputDirectory>${repo.outputDirectory}/tpd</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>publish-docs</id>
+						<phase>prepare-package</phase>
+						<goals><goal>copy-resources</goal></goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${root.path}/${docs.path}/target/generated-docs</directory>
+									<includes>
+										<include>*.pdf</include>
+									</includes>
+								</resource>
+							</resources>
+							<outputDirectory>${repo.outputDirectory}/docs</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- Built-in binaries: jpg,jpeg,bmp,png -->
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+					<outputDirectory>${repo.outputDirectory}</outputDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>content-index</id>
+						<phase>prepare-package</phase>
+						<goals><goal>run</goal></goals>
+						<configuration>
+							<target>
+								<ant antfile="${basedir}/content2html.xml" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>dropins</id>
+			<activation>
+				<file>
+					<exists>dropins.profile</exists>
+				</file>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<!-- Dropins are easier to deploy on T4C server. -->
+							<execution>
+								<id>dropins</id>
+								<phase>package</phase>
+								<goals><goal>run</goal></goals>
+								<configuration>
+									<target>
+										<echo>Call ${basedir}/dropins.xml</echo>
+										<ant antfile="${basedir}/dropins.xml" />
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>

@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Automatic-Module-Name: com.obeonetwork.mbse.capella.vpx.validation
+Bundle-SymbolicName: com.obeonetwork.mbse.capella.vpx.validation;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-Activator: com.obeonetwork.mbse.capella.vpx.validation.Activator
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Require-Bundle: 
+ org.eclipse.core.runtime,
+ org.eclipse.emf.validation,
+ com.obeonetwork.mbse.capella.vpx.model,
+ com.obeonetwork.mbse.capella.vpx.commons
+Export-Package: 
+ com.obeonetwork.mbse.capella.vpx.validation
