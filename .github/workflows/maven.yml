@@ -33,7 +33,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages
-          folder: releng/publish/target/site
+          folder: releng/com.obeonetwork.mbse.capella.vpx.site/target/repository
           target-folder: nightly
           single-commit: true # Remove history in gh-pages
           clean: true # Remove deprecated files
@@ -47,7 +47,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages
-          folder: releng/publish/target/site
+          folder: releng/com.obeonetwork.mbse.capella.vpx.site/target/repository
           target-folder: releases/${{ steps.get_version.outputs.TAG_VERSION }}
           single-commit: true # Remove history in gh-pages
           clean: true # Remove deprecated files
