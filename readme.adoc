@@ -1,0 +1,4 @@
+## Update sites
+
+- https://peransin-obeo.github.io/CapellaVpEx/nightly/
+- https://peransin-obeo.github.io/CapellaVpEx/releases/1.0
