@@ -23,12 +23,12 @@
 		<link>
 			<name>github</name>
 			<type>2</type>
-			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/.github</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/.github</locationURI>
 		</link>
 		<link>
 			<name>readme.adoc</name>
 			<type>1</type>
-			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/readme.adoc</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/readme.adoc</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

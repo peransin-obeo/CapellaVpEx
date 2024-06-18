@@ -1,43 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Capella Viewpoint Extension tools - Build" sequenceNumber="1718211339">
+<target name="Capella Viewpoint Extension tools - Build" sequenceNumber="1718737413">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.gmf.runtime.notation.sdk.feature.group" version="1.13.0.202004160913"/>
-      <repository id="GMF-Notation-1.13.0" location="https://download.eclipse.org/modeling/gmp/gmf-notation/updates/releases/R202004160913"/>
+      <unit id="org.eclipse.gmf.runtime.notation.sdk.feature.group" version="1.13.1.202211151334"/>
+      <repository id="GMF-Notation-1.13.1" location="https://download.eclipse.org/modeling/gmp/gmf-notation/updates/releases/R202211151334"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.gmf.runtime.sdk.feature.group" version="1.13.0.202004160913"/>
-      <unit id="org.eclipse.gmf.runtime.thirdparty.feature.group" version="1.13.0.202004160913"/>
-      <repository id="GMF-Runtime-1.13.0" location="https://download.eclipse.org/modeling/gmp/gmf-runtime/updates/releases/R202004160913"/>
+      <unit id="org.eclipse.gmf.runtime.sdk.feature.group" version="1.15.3.202211041032"/>
+      <unit id="org.eclipse.gmf.runtime.thirdparty.feature.group" version="1.15.3.202211041032"/>
+      <repository id="GMF-Runtime-1.15.3" location="https://download.eclipse.org/modeling/gmp/gmf-runtime/updates/releases/R202211041032/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.acceleo.feature.group" version="3.7.11.202102190929"/>
-      <unit id="org.eclipse.acceleo.ide.ui" version="3.7.11.202102190929"/>
-      <unit id="org.eclipse.acceleo.query.feature.group" version="7.0.0.202102190929"/>
-      <unit id="org.eclipse.acceleo.query.ui.feature.group" version="7.0.0.202102190929"/>
-      <unit id="org.antlr.runtime" version="4.7.2.v20200218-0804"/>
-      <repository id="acceleo" location="https://download.eclipse.org/acceleo/updates/releases/3.7/R202102190929"/>
+      <unit id="org.eclipse.gef.feature.group" version="3.15.0.202211301913"/>
+      <unit id="org.eclipse.gef.sdk.feature.group" version="3.15.0.202211301913"/>
+      <unit id="org.eclipse.draw2d.sdk.feature.group" version="3.15.0.202211301913"/>
+      <unit id="org.eclipse.draw2d.feature.group" version="3.15.0.202211301913"/>
+      <repository id="GEF-Classic" location="https://download.eclipse.org/tools/gef/classic/releases/3.15.0"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.eclipse.acceleo.ui.interpreter.feature.group" version="3.7.11.202102190929"/>
-      <unit id="org.eclipse.sirius.diagram.elk.feature.feature.group" version="6.6.0.202111261321"/>
-      <unit id="org.eclipse.sirius.diagram.elk.sdk.feature.feature.group" version="6.6.0.202111261321"/>
-      <unit id="org.eclipse.sirius.doc.feature.feature.group" version="6.6.0.202111261321"/>
-      <unit id="org.eclipse.sirius.interpreter.feature.feature.group" version="6.6.0.202111261321"/>
-      <unit id="org.eclipse.sirius.properties.feature.feature.group" version="6.6.0.202111261321"/>
-      <unit id="org.eclipse.sirius.runtime.acceleo.feature.group" version="6.6.0.202111261321"/>
-      <unit id="org.eclipse.sirius.runtime.aql.feature.group" version="6.6.0.202111261321"/>
-      <unit id="org.eclipse.sirius.runtime.ide.ui.acceleo.feature.group" version="6.6.0.202111261321"/>
-      <unit id="org.eclipse.sirius.runtime.ide.ui.feature.group" version="6.6.0.202111261321"/>
-      <unit id="org.eclipse.sirius.runtime.ide.xtext.feature.group" version="6.6.0.202111261321"/>
-      <unit id="org.eclipse.sirius.runtime.feature.group" version="6.6.0.202111261321"/>
-      <repository id="sirius" location="https://download.eclipse.org/sirius/updates/releases/6.6.0/2020-09/"/>
+      <unit id="org.eclipse.sirius.diagram.elk.feature.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.sirius.diagram.elk.sdk.feature.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.sirius.doc.feature.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.sirius.interpreter.feature.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.sirius.properties.feature.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.sirius.runtime.acceleo.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.sirius.runtime.aql.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.sirius.aql.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.sirius.runtime.ide.ui.acceleo.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.sirius.runtime.ide.ui.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.sirius.runtime.ide.xtext.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.sirius.runtime.feature.group" version="7.1.0.202303020853"/>
+      <unit id="org.eclipse.acceleo.query.feature.group" version="7.0.0.202211151354"/>
+      <unit id="org.eclipse.acceleo.ui.interpreter.feature.group" version="3.7.12.202211151354"/>
+      <repository id="sirius" location="https://download.eclipse.org/sirius/updates/releases/7.1.0/2021-06/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="2.0.2.v20181016-2210"/>
       <repository id="eclipse-shared-license" location="http://download.eclipse.org/cbi/updates/license"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.emf.ecoretools.design.feature.group" version="3.4.0.202201202026"/>
+      <repository id="ecoretools" location="http://download.eclipse.org/ecoretools/updates/releases/3.4.0/2021-06"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipselabs.emf.loophole.feature.group" version="2.9.0.201309251647"/>
@@ -46,7 +51,8 @@
     <location includeMode="planner" includeAllPlatforms="false" includeSource="false" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.junit" version="4.13.0.v20200204-1500"/>
       <unit id="org.eclipse.pde.feature.group" version="3.14.800.v20210611-1636"/>
-      <unit id="org.eclipse.emf.ecoretools.design.feature.group" version="3.3.3.202010261352"/>
+      <unit id="org.eclipse.xtend.sdk.feature.group" version="2.25.0.v20210301-1429"/>
+      <unit id="org.eclipse.xtext.sdk.feature.group" version="2.25.0.v20210301-1429"/>
       <unit id="org.eclipse.platform.feature.group" version="4.20.0.v20210611-1600"/>
       <unit id="org.eclipse.epp.mpc.feature.group" version="1.9.1.v20210204-1408"/>
       <unit id="org.eclipse.egit.feature.group" version="5.12.0.202106070339-r"/>

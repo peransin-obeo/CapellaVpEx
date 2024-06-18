@@ -4,10 +4,9 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
- *      Obeo - initial API and implementation
- */
+ * Obeo - initial API and implementation */
 package com.obeonetwork.mbse.capella.vpx.design;
 
 import java.lang.reflect.InvocationTargetException;
@@ -30,42 +29,46 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipselabs.emf.loophole.internal.model.GenGapModel;
 
 /**
- * Copy from : mbarbero/emf-loophole
- * - bundles/org.eclipselabs.emf.loophole.ui/src/
+ * Copy from : (Github) mbarbero/emf-loophole
+ * bundles/org.eclipselabs.emf.loophole.ui/src/
  * org/eclipselabs/emf/loophole/ui/internal/model/editor/LoopholeGeneratorOperation
  * <p>
  * To solve compilation issue.
  * </p>
+ *
  * @author nperansin
  *
  */
-@SuppressWarnings("restriction") 
+@SuppressWarnings("restriction")
 public class LoopholeGeneratorOperation extends GeneratorOperation {
 
-    // Index 
+    // Index
     private static final int PROJECT_TYPE_INDEX = 2;
     private static final int GENMODEL_INDEX = 4;
 
-	public LoopholeGeneratorOperation(Shell arg0) {
-		super(arg0);
-	}
-	
-    public void addGeneratorAndArguments(Generator generator, Object object, Object projectType, String projectTypeName, GenGapModel genGapModel)
-    {
-      if (generatorAndArgumentsList == null)
-      {
-        generatorAndArgumentsList = new ArrayList<Object[]>();
-      }
-      Object[] info = {
-          generator, object, 
-          /*2*/projectType, projectTypeName, 
-          /*4*/genGapModel
-      };
-      
-      generatorAndArgumentsList.add(info);
+    public LoopholeGeneratorOperation(Shell arg0) {
+        super(arg0);
     }
-	
-    private IFolder prepareDirectory(Object[] genArgs, IProgressMonitor monitor) throws CoreException {
+
+    public void addGeneratorAndArguments(
+            Generator generator, Object object, Object projectType, String projectTypeName,
+            GenGapModel genGapModel) {
+        if (generatorAndArgumentsList == null) {
+            generatorAndArgumentsList = new ArrayList<>();
+        }
+        Object[] info = {
+            generator,
+            object,
+            /*2*/projectType,
+            projectTypeName,
+            /*4*/genGapModel
+        };
+
+        generatorAndArgumentsList.add(info);
+    }
+
+    private IFolder prepareDirectory(Object[] genArgs, IProgressMonitor monitor)
+            throws CoreException {
         if (!(GENMODEL_INDEX < genArgs.length)) {
             return null;
         }
@@ -73,11 +76,11 @@ public class LoopholeGeneratorOperation extends GeneratorOperation {
         GenModel genModel = genGapModel.getGenModel();
         String directory = null;
         boolean clean = false;
-        String projectType = genArgs[PROJECT_TYPE_INDEX] instanceof String 
-                ? (String) genArgs[PROJECT_TYPE_INDEX]
-                : "";
-        
-        switch(projectType) {
+        String projectType = genArgs[PROJECT_TYPE_INDEX] instanceof String
+            ? (String) genArgs[PROJECT_TYPE_INDEX]
+            : "";
+
+        switch (projectType) {
         case GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE:
             directory = genModel.getModelDirectory();
             clean = genGapModel.isCleanModelDirectory();
@@ -102,24 +105,26 @@ public class LoopholeGeneratorOperation extends GeneratorOperation {
         }
         return srcFolder;
     }
-    
-	@Override
-	protected void execute(IProgressMonitor progressMonitor) throws CoreException, InvocationTargetException, InterruptedException {
-		SubMonitor subMonitor = SubMonitor.convert(progressMonitor, 80 + 15 * generatorAndArgumentsList.size());
-        
-		List<IProject> genProjets = new ArrayList<>();
-		for (Object[] generatorAndArguments : generatorAndArgumentsList) {
-		    IFolder srcFolder = prepareDirectory(generatorAndArguments, subMonitor.newChild(10));
-		    if (srcFolder != null) {
-		        genProjets.add(srcFolder.getProject());
-		    }
+
+    @Override
+    protected void execute(IProgressMonitor progressMonitor)
+            throws CoreException, InvocationTargetException, InterruptedException {
+        SubMonitor subMonitor =
+            SubMonitor.convert(progressMonitor, 80 + 15 * generatorAndArgumentsList.size());
+
+        List<IProject> genProjets = new ArrayList<>();
+        for (Object[] generatorAndArguments : generatorAndArgumentsList) {
+            IFolder srcFolder = prepareDirectory(generatorAndArguments, subMonitor.newChild(10));
+            if (srcFolder != null) {
+                genProjets.add(srcFolder.getProject());
+            }
         }
-		super.execute(subMonitor.newChild(80));
-		
-		// Refresh containers.
-		for (IProject target : genProjets) {
-		    target.refreshLocal(IResource.DEPTH_INFINITE, subMonitor.newChild(5));
-		}
-	}
-	
+        super.execute(subMonitor.newChild(80));
+
+        // Refresh containers.
+        for (IProject target : genProjets) {
+            target.refreshLocal(IResource.DEPTH_INFINITE, subMonitor.newChild(5));
+        }
+    }
+
 }
