@@ -24,8 +24,8 @@ location eclipse "https://download.eclipse.org/releases/2021-06/" {
 
 }
 
-// org.eclipse.sirius.editor
-location sirius "https://download.eclipse.org/sirius/updates/releases/6.6.0/2020-09/" {
+// From Capella 6.1 (not release train)
+location sirius "https://download.eclipse.org/sirius/updates/releases/7.1.0/2021-06/" {
 	
 	// Includes Odesign edit, Sirius interpreter view and Odesign reload 
 	org.eclipse.sirius.specifier.ide.ui.feature.group

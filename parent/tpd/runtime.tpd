@@ -13,7 +13,7 @@ environment JavaSE-11
 
 include "runtime_platform.tpd"
 
-location eclipse "https://download.eclipse.org/releases/2021-06/" {
+location ecoretools "http://download.eclipse.org/ecoretools/updates/releases/3.4.0/2021-06" {
 	// Ecoretools is needed to edit Viewpoint model.
 	org.eclipse.emf.ecoretools.design.feature.group
 }

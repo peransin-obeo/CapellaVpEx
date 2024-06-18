@@ -72,7 +72,7 @@
             <elementView name="elementView"/>
             <containerView name="containerView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:For" expression="aql:let target = view.targetNode.target in view.sourceNode.target.eAnnotations ->select(it | it.isEmdeConstraintExtensionOf(target) or it.isEmdeMappingExtensionOf(target))">
+              <firstModelOperations xsi:type="tool:For" expression="aql:let target = elementView.targetNode.target in elementView.sourceNode.target.eAnnotations ->select(it | it.isEmdeConstraintExtensionOf(target) or it.isEmdeMappingExtensionOf(target))">
                 <subModelOperations xsi:type="tool:RemoveElement"/>
               </firstModelOperations>
             </initialOperation>

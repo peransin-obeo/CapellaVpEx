@@ -29,26 +29,27 @@ location eclipse "https://download.eclipse.org/releases/2021-06/" {
     org.eclipse.eef.ext.widgets.reference.feature.feature.group
 }
 
-location GMF-Notation-1.13.0 "https://download.eclipse.org/modeling/gmp/gmf-notation/updates/releases/R202004160913" {
+// From Capella 6.1 (not release train)
+location GMF-Notation-1.13.1 "https://download.eclipse.org/modeling/gmp/gmf-notation/updates/releases/R202211151334" {
     org.eclipse.gmf.runtime.notation.sdk.feature.group
 }
 
-location GMF-Runtime-1.13.0 "https://download.eclipse.org/modeling/gmp/gmf-runtime/updates/releases/R202004160913" {
+// From Capella 6.1 (not release train)
+location GMF-Runtime-1.15.3 "https://download.eclipse.org/modeling/gmp/gmf-runtime/updates/releases/R202211041032/" {
     org.eclipse.gmf.runtime.sdk.feature.group
     org.eclipse.gmf.runtime.thirdparty.feature.group
 }
 
-// Acceleo 3.7.11 & AQL 7.0.0
-location acceleo "https://download.eclipse.org/acceleo/updates/releases/3.7/R202102190929" {
-    org.eclipse.acceleo.feature.group
-    org.eclipse.acceleo.ide.ui
-    org.eclipse.acceleo.query.feature.group
-    org.eclipse.acceleo.query.ui.feature.group
-    org.antlr.runtime [4.7.2,4.7.3)
+// From Capella 6.1 (not release train)
+location GEF-Classic  "https://download.eclipse.org/tools/gef/classic/releases/3.15.0" {
+    org.eclipse.gef.feature.group
+    org.eclipse.gef.sdk.feature.group
+    org.eclipse.draw2d.sdk.feature.group
+	org.eclipse.draw2d.feature.group
 }
 
-location sirius "https://download.eclipse.org/sirius/updates/releases/6.6.0/2020-09/" {
-    org.eclipse.acceleo.ui.interpreter.feature.group
+// From Capella 6.1 (not release train)
+location sirius "https://download.eclipse.org/sirius/updates/releases/7.1.0/2021-06/" {
     org.eclipse.sirius.diagram.elk.feature.feature.group
     org.eclipse.sirius.diagram.elk.sdk.feature.feature.group
     org.eclipse.sirius.doc.feature.feature.group
@@ -57,12 +58,18 @@ location sirius "https://download.eclipse.org/sirius/updates/releases/6.6.0/2020
     
     org.eclipse.sirius.runtime.acceleo.feature.group
     org.eclipse.sirius.runtime.aql.feature.group
+    org.eclipse.sirius.aql.feature.group
     // org.eclipse.sirius.runtime.ide.eef.feature.group // EEF 1.x: Deprecated
     org.eclipse.sirius.runtime.ide.ui.acceleo.feature.group
     org.eclipse.sirius.runtime.ide.ui.feature.group
     org.eclipse.sirius.runtime.ide.xtext.feature.group
     org.eclipse.sirius.runtime.feature.group
+    org.eclipse.acceleo.query.feature.group
+    org.eclipse.acceleo.ui.interpreter.feature.group    
 }
+
+
+
 
 location eclipse-shared-license "http://download.eclipse.org/cbi/updates/license" {
 	org.eclipse.license.feature.group

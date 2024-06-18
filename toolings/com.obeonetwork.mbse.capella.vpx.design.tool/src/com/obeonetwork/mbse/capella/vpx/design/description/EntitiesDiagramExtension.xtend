@@ -212,8 +212,8 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 			ownedTools += DeleteElementDescription.createAs(Ns.del, "emdeExtensionDel")[
 				initVariables
 				operation = '''
-					let target = view.targetNode.target in
-					view.sourceNode.target.eAnnotations
+					let target = elementView.targetNode.target in
+					elementView.sourceNode.target.eAnnotations
 					  ->select(it | it.isEmdeConstraintExtensionOf(target)
 					    or it.isEmdeMappingExtensionOf(target))
 					'''.trimAql.forDo(RemoveElement.create)
