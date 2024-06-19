@@ -30,16 +30,21 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 public class VpToolsServices {
 
     private static final String CP_MODEL_PLUGIN = "org.polarsys.capella.core.data.gen";
-    private static final String URI_BASE = "platform:/plugin/" + CP_MODEL_PLUGIN + "/model/";
-    public static final String EXT_ANNOTATION =
-        "http://www.polarsys.org/kitalpha/emde/1.0.0/constraintMapping";
-    public static final String EXT_CLASS_KEY = "Mapping";
 
-    public static final String EXT_ANNOTATION2 =
-        "http://www.polarsys.org/kitalpha/emde/1.0.0/constraint";
-    public static final String EXT_CLASS_KEY2 = "ExtendedElement";
+    private static final String URI_BASE = "platform:/plugin/" + CP_MODEL_PLUGIN + "/model/";
+
+    // Ecore
+    public static final String ECORE_ANNOTATION = "http://www.polarsys.org/kitalpha/emde/1.0.0/constraintMapping";
+
+    public static final String ECORE_CLASS_KEY = "Mapping";
+
+    // Qualified
+    public static final String QN_ANNOTATION = "http://www.polarsys.org/kitalpha/emde/1.0.0/constraint";
+
+    public static final String QN_CLASS_KEY = "ExtendedElement";
 
     public static final String EMDE_ECORE = "org.polarsys.kitalpha.emde/model/eMDE.ecore";
+
     public static final URI EMDE_EXTENSION_URI = URI // appendFragment avoids '#' encoding
         .createPlatformPluginURI(EMDE_ECORE, false)
         .appendFragment("//ElementExtension");
@@ -98,7 +103,7 @@ public class VpToolsServices {
      * @return associated EClass
      */
     public static EClass getEmdeAnnotationElement(EAnnotation it) {
-        String classUri = it.getDetails().get(EXT_CLASS_KEY);
+        String classUri = it.getDetails().get(ECORE_CLASS_KEY);
         if (classUri == null) {
             return null;
         }
@@ -136,10 +141,10 @@ public class VpToolsServices {
      * @return extension
      */
     public static EClass addEmdeExtensions(EClass extension, EClass extended) {
-        createEAnnotation(extension, EXT_ANNOTATION2).getDetails()
-            .put(EXT_CLASS_KEY2, getQualifiedName(extended));
-        createEAnnotation(extension, EXT_ANNOTATION).getDetails()
-            .put(EXT_CLASS_KEY, EcoreUtil.getURI(extended).toString());
+        createEAnnotation(extension, QN_ANNOTATION).getDetails()
+            .put(QN_CLASS_KEY, getQualifiedName(extended));
+        createEAnnotation(extension, ECORE_ANNOTATION).getDetails()
+            .put(ECORE_CLASS_KEY, EcoreUtil.getURI(extended).toString());
 
         EClass extensionClass = getEClass(extension, EMDE_EXTENSION_URI);
         if (!extension.getEAllSuperTypes().contains(extensionClass)) {
@@ -170,7 +175,7 @@ public class VpToolsServices {
      * @return true if is expected annotation
      */
     public static boolean isEmdeConstraintExtensionOf(EAnnotation it, EClass target) {
-        return isEmdeExtensionOf(it, EXT_ANNOTATION2, EXT_CLASS_KEY2,
+        return isEmdeExtensionOf(it, QN_ANNOTATION, QN_CLASS_KEY,
             getQualifiedName(target));
     }
 
@@ -184,7 +189,7 @@ public class VpToolsServices {
      * @return true if is expected annotation
      */
     public static boolean isEmdeMappingExtensionOf(EAnnotation it, EClass target) {
-        return isEmdeExtensionOf(it, EXT_ANNOTATION, EXT_CLASS_KEY,
+        return isEmdeExtensionOf(it, ECORE_ANNOTATION, ECORE_CLASS_KEY,
             EcoreUtil.getURI(target).toString());
     }
 
@@ -224,6 +229,35 @@ public class VpToolsServices {
         return it == null || type.isInstance(it)
             ? (T) it
             : eAncestor(it.eContainer(), type);
+    }
+
+    public static boolean containHiddenExtensions(EClass it) {
+        if (it.getESuperTypes().size() < 2
+            || containExtension(it, false)) { // Nothing hidden if explicit
+            return false;
+        }
+        return it.getESuperTypes()
+            .stream()
+            .skip(1)
+            .anyMatch(type -> containExtension(type, true));
+    }
+
+    static boolean containExtension(EClass it, boolean withParent) {
+        if (it.getEAnnotations()
+            .stream()
+            .anyMatch(ann -> Objects.equals(ann.getSource(), QN_ANNOTATION))) {
+            return true;
+        }
+        // Only first inheritance:
+        // https://github.com/eclipse/kitalpha/
+        // blob/v6.2.0/
+        // emde/plugins/org.polarsys.kitalpha.emde.model.edit/
+        // src/org/polarsys/kitalpha/emde/model/edit/provider/helpers/EMDEHelper.java#L187
+
+        // If a supertype is wrong, it will be displayed.
+        return withParent
+            && !it.getESuperTypes().isEmpty()
+            && containExtension(it.getESuperTypes().get(0), true);
     }
 
 }

@@ -9,7 +9,7 @@
         <edgeMappings name="emdeExtension" deletionDescription="//@ownedViewpoints[name='CapellaVp']/@ownedRepresentationExtensions[name='EntitiesDiagramExtension']/@layers[name='Capella%20Extension']/@toolSections.1/@ownedTools[name='emdeExtensionDel']" targetFinderExpression="aql:self.eAnnotations ->select(it | it.source = 'http://www.polarsys.org/kitalpha/emde/1.0.0/constraintMapping') .getEmdeAnnotationElement()">
           <sourceMapping xsi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
           <targetMapping xsi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
-          <style targetArrow="OutputFillClosedArrow" routingStyle="manhattan" endsCentering="Both">
+          <style targetArrow="OutputFillClosedArrow" routingStyle="manhattan">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
           </style>
         </edgeMappings>
@@ -80,6 +80,9 @@
         </toolSections>
         <decorationDescriptionsSet>
           <decorationDescriptions xsi:type="description_1:MappingBasedDecoration" name="ExtensionHint" position="NORTH_EAST" distributionDirection="HORIZONTAL" preconditionExpression="aql:self.isEmdeExtensionClass()" imageExpression="/com.obeonetwork.mbse.capella.vpx.design/icons/extension.png">
+            <mappings xsi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
+          </decorationDescriptions>
+          <decorationDescriptions xsi:type="description_1:MappingBasedDecoration" name="HiddenExtensions" position="NORTH_EAST" distributionDirection="HORIZONTAL" preconditionExpression="aql:self.containHiddenExtensions()" imageExpression="/org.eclipse.jface/org/eclipse/jface/dialogs/images/message_error.png" tooltipExpression="aql:'EMDE only consider extension of first superclass.\n Change supertypes order or add explicit extension.'">
             <mappings xsi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
           </decorationDescriptions>
         </decorationDescriptionsSet>

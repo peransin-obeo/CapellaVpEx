@@ -15,6 +15,7 @@ import org.eclipse.sirius.diagram.DiagramPackage
 import org.eclipse.sirius.diagram.EdgeArrows
 import org.eclipse.sirius.diagram.HideFilter
 import org.eclipse.sirius.diagram.description.AdditionalLayer
+import org.eclipse.sirius.diagram.description.CenteringStyle
 import org.eclipse.sirius.diagram.description.ContainerMapping
 import org.eclipse.sirius.diagram.description.DiagramDescription
 import org.eclipse.sirius.diagram.description.DiagramExtensionDescription
@@ -25,7 +26,6 @@ import org.eclipse.sirius.diagram.description.style.StylePackage
 import org.eclipse.sirius.diagram.description.tool.DeleteElementDescription
 import org.eclipse.sirius.diagram.description.tool.EdgeCreationDescription
 import org.eclipse.sirius.diagram.description.tool.ToolSection
-import org.eclipse.sirius.viewpoint.description.DecorationDescriptionsSet
 import org.eclipse.sirius.viewpoint.description.DecorationDistributionDirection
 import org.eclipse.sirius.viewpoint.description.Position
 import org.eclipse.sirius.viewpoint.description.UserFixedColor
@@ -49,21 +49,40 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 	
 	static val TO_EMDE_CLASSES = '''
 		.eAnnotations
-		  ->select(it | it.source = '«VpToolsServices.EXT_ANNOTATION»')
+		  ->select(it | it.source = '«VpToolsServices.ECORE_ANNOTATION»')
 		  .getEmdeAnnotationElement()
 		'''
 	
+	val ContainerMapping eClassMapping
+	
 	new(extension CapellaVpDesign parent) {
 		super(parent, DiagramDescription.extraRef("etools§EntitiesDiagram"))
+		eClassMapping = ContainerMapping.extraRef("node:etools§EntitiesDiagram#EC EClass")
 	}
 
 	override initContent(DiagramExtensionDescription it) {
+
+// Validation is not live unlike decorators ...
+//   (kind of useless)
+					
+//		ownedValidations += ViewValidationRule.create("Lost Extensions") [
+//			level = ERROR_LEVEL.ERROR_LITERAL
+//			// https://github.com/eclipse/kitalpha/
+//			// blob/v6.2.0/
+//			// emde/plugins/org.polarsys.kitalpha.emde.model.edit/
+//			// src/org/polarsys/kitalpha/emde/model/edit/provider/helpers/EMDEHelper.java#L187
+//			message = ''' 'EMDE only consider extension of first superclass' '''.trimAql
+//			targets += eClassMapping
+//			validFor('''not self.target.containHiddenExtensions()'''.trimAql)
+//		]
+		
+		
 		layers += AdditionalLayer.create("Capella Extension") [
 			label = "%capellavp.entities.layer"
 			activeByDefault = true
 			icon = CapellaVpDesign.ICONS + "Viewpoint.gif"
 			
-			val eClassNode = ContainerMapping.extraRef("node:etools§EntitiesDiagram#EC EClass")
+			val eClassNode = eClassMapping
 
 			val colorCustoms = #[ "null" -> CapellaVpDesign.COMMON_ID ]
 				+ VpToolsServices.MODULE_NAMES
@@ -78,16 +97,26 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 				)
 			]
 			
-			decorationDescriptionsSet = DecorationDescriptionsSet.create [
-				decorationDescriptions += MappingBasedDecoration.create [
-					name = "ExtensionHint"
-					position = Position.NORTH_EAST_LITERAL
-					distributionDirection = DecorationDistributionDirection.HORIZONTAL
-					preconditionExpression = '''self.isEmdeExtensionClass()'''.trimAql
-					imageExpression = CapellaVpDesign.ICONS + "extension.png"
-					mappings += eClassNode
-				]
+			decorations += MappingBasedDecoration.create [
+				name = "ExtensionHint"
+				position = Position.NORTH_EAST_LITERAL
+				distributionDirection = DecorationDistributionDirection.HORIZONTAL
+				preconditionExpression = '''self.isEmdeExtensionClass()'''.trimAql
+				imageExpression = CapellaVpDesign.ICONS + "extension.png"
+				mappings += eClassNode
 			]
+			decorations += MappingBasedDecoration.create [
+				name = "HiddenExtensions"
+				position = Position.NORTH_EAST_LITERAL
+				distributionDirection = DecorationDistributionDirection.HORIZONTAL
+				preconditionExpression = '''self.containHiddenExtensions()'''.trimAql
+				imageExpression = "/org.eclipse.jface/org/eclipse/jface/dialogs/images/message_error.png"
+				tooltipExpression = '''
+					'EMDE only consider extension of first superclass.\n
+					Change supertypes order or add explicit extension.' '''.trimAql
+				mappings += eClassNode
+			]
+			
 
 			edgeMappings += EdgeMapping.createAs(Ns.edge, "emdeExtension") [
 				// domainClass = EAnnotation
@@ -100,9 +129,10 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 
 				targetFinderExpression = '''self«TO_EMDE_CLASSES»'''.trimAql
 
-					style = [
-						targetArrow = EdgeArrows.OUTPUT_FILL_CLOSED_ARROW_LITERAL
-					]
+				style = [
+					endsCentering = CenteringStyle.NONE
+					targetArrow = EdgeArrows.OUTPUT_FILL_CLOSED_ARROW_LITERAL
+				]
 			]
 			
 			toolSections += createExistingElementsTools
@@ -181,7 +211,7 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 					'''.trimAql.letDo("classes", 
 						'''classes«TO_EMDE_CLASSES» - classes'''.trimAql.forDo(
 							"service:markForAutosize".toContext(
-								ContainerMapping.extraRef("node:etools§EntitiesDiagram#EC EClass")
+								eClassMapping
 									.viewDo("diagram")
 							)
 						)
