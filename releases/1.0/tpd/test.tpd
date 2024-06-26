@@ -1,0 +1,17 @@
+/*******************************************************************************
+
+  Copyright (c) 2024 Obeo. All rights reserved.
+
+  Contributors: 
+    Obeo - initial API and implementation.
+
+ *******************************************************************************/
+target "Capella Viewpoint Extension tools - Test"
+
+with requirements
+
+location eclipse "https://download.eclipse.org/releases/2021-06/" {
+	org.junit
+	org.eclipse.pde.feature.group
+	// +-> org.eclipse.pde.junit
+}

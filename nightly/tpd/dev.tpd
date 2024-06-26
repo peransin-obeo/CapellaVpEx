@@ -1,0 +1,29 @@
+/*******************************************************************************
+
+  Copyright (c) 2024 Obeo. All rights reserved.
+
+  Contributors: 
+    Obeo - initial API and implementation.
+
+ *******************************************************************************/
+target "CapellaVpEx - Dev" 
+
+//
+// Components used only in development env.
+// 
+
+with requirements
+
+include "dev_emf.tpd"
+
+location modit "https://mypsycho.github.io/ModIt/releases/v1.3" {
+	// VSM by API.
+	org.mypsycho.emf.modit_feature.feature.group
+	org.mypsycho.emf.modit.sirius_feature.feature.group
+}
+
+// Common Build Infrastructure
+location cbi "https://download.eclipse.org/cbi/tpd/3.0.0-SNAPSHOT/" {
+	org.eclipse.cbi.targetplatform-feature.feature.group
+}
+
