@@ -91,7 +91,7 @@ public class VpGenerationServices {
                     MessageFormat.format("Generation failed {0}\n", e.getLocalizedMessage()));
                 throw new InvocationTargetException(e);
             }
-            scheduleInUI("Viewpoint Custom Generation", fb,
+            scheduleInUI("Viewpoint Custom Generation", fb, 2_000,
                 subProgress -> startLaunchConfiguration(getCustomLaunchName(anchor),
                     fb, subProgress));
         });

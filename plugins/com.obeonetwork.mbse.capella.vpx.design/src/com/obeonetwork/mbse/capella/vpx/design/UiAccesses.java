@@ -124,6 +124,19 @@ public class UiAccesses {
      *     to perform
      */
     static void scheduleInUI(String jobName, IOConsole trace, IRunnableWithProgress operation) {
+        scheduleInUI(jobName, trace, 0L, operation);
+    }
+
+    /**
+     * Schedules a job.
+     *
+     * @param jobName
+     *     of operation
+     * @param operation
+     *     to perform
+     */
+    static void scheduleInUI(
+            String jobName, IOConsole trace, long delay, IRunnableWithProgress operation) {
         WorkspaceJob job = new WorkspaceJob(jobName) {
 
             @Override
@@ -146,7 +159,7 @@ public class UiAccesses {
         job.setRule(ResourcesPlugin.getWorkspace().getRoot());
         job.setUser(true);
         job.setPriority(Job.BUILD);
-        job.schedule();
+        job.schedule(delay);
     }
 
     /**

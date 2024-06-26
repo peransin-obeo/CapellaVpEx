@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Capella Viewpoint Extension tools - SDK" sequenceNumber="1718819781">
+<target name="Capella Viewpoint Extension tools - SDK" sequenceNumber="1719428371">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.gmf.runtime.notation.sdk.feature.group" version="1.13.1.202211151334"/>
@@ -68,8 +68,8 @@
       <repository id="sirius" location="https://download.eclipse.org/sirius/updates/releases/7.1.0/2021-06/"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
-      <unit id="org.mypsycho.emf.modit_feature.feature.group" version="1.3.0.v20240619-1707"/>
-      <unit id="org.mypsycho.emf.modit.sirius_feature.feature.group" version="1.3.0.v20240619-1707"/>
+      <unit id="org.mypsycho.emf.modit_feature.feature.group" version="1.3.0.v20240625-1622"/>
+      <unit id="org.mypsycho.emf.modit.sirius_feature.feature.group" version="1.3.0.v20240625-1622"/>
       <repository id="modit" location="https://mypsycho.github.io/ModIt/releases/v1.3"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
