@@ -14,7 +14,7 @@
 
 	<groupId>com.obeonetwork.mbse.capella.vpx</groupId>
 	<artifactId>parent</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 
 	<!-- 
 	  pom parent must always set version, 
@@ -40,7 +40,7 @@
 		<tp.version>1.0.0-SNAPSHOT</tp.version>
 		<tp.mode>build</tp.mode>
 
-		<tycho.version>2.7.5</tycho.version>
+		<tycho.version>5.0.1</tycho.version>
 		<xtend.version>2.25.0</xtend.version>
 
 		<!-- Xtend plugin does not take source version from TPD  -->
@@ -201,7 +201,7 @@
 					<version>${tycho.version}</version>
 					<dependencies>
 						<dependency>
-							<groupId>org.eclipse.tycho.extras</groupId>
+							<groupId>org.eclipse.tycho</groupId>
 							<artifactId>tycho-buildtimestamp-jgit</artifactId>
 							<version>${tycho.version}</version>
 						</dependency>
