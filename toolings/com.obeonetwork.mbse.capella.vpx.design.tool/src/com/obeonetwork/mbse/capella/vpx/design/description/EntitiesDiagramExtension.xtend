@@ -14,6 +14,7 @@ import org.eclipse.sirius.diagram.DNodeListElement
 import org.eclipse.sirius.diagram.DiagramPackage
 import org.eclipse.sirius.diagram.EdgeArrows
 import org.eclipse.sirius.diagram.HideFilter
+import org.eclipse.sirius.diagram.DDiagram
 import org.eclipse.sirius.diagram.description.AdditionalLayer
 import org.eclipse.sirius.diagram.description.CenteringStyle
 import org.eclipse.sirius.diagram.description.ContainerMapping
@@ -29,7 +30,6 @@ import org.eclipse.sirius.diagram.description.tool.ToolSection
 import org.eclipse.sirius.viewpoint.description.DecorationDistributionDirection
 import org.eclipse.sirius.viewpoint.description.Position
 import org.eclipse.sirius.viewpoint.description.UserFixedColor
-import org.eclipse.sirius.viewpoint.description.tool.ContainerViewVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementVariable
 import org.eclipse.sirius.viewpoint.description.tool.ElementViewVariable
 import org.eclipse.sirius.viewpoint.description.tool.OperationAction
@@ -39,6 +39,7 @@ import org.mypsycho.modit.emf.sirius.api.SiriusDiagramExtension
 
 import static extension org.mypsycho.modit.emf.sirius.api.SiriusDesigns.*
 
+
 /**
  * Extension of EntitiesDiagram diagram from EcoreTools.
  */
@@ -46,12 +47,6 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 	
 	static val DSTYLE = StylePackage.eINSTANCE
 	static val DPKG = DiagramPackage.eINSTANCE
-	
-	static val TO_EMDE_CLASSES = '''
-		.eAnnotations
-		  ->select(it | it.source = '«VpToolsServices.ECORE_ANNOTATION»')
-		  .getEmdeAnnotationElement()
-		'''
 	
 	val ContainerMapping eClassMapping
 	
@@ -75,7 +70,6 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 //			targets += eClassMapping
 //			validFor('''not self.target.containHiddenExtensions()'''.trimAql)
 //		]
-		
 		
 		layers += AdditionalLayer.create("Capella Extension") [
 			label = "%capellavp.entities.layer"
@@ -116,7 +110,6 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 					Change supertypes order or add explicit extension.' '''.trimAql
 				mappings += eClassNode
 			]
-			
 
 			edgeMappings += EdgeMapping.createAs(Ns.edge, "emdeExtension") [
 				// domainClass = EAnnotation
@@ -127,7 +120,7 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 				sourceMapping += eClassNode
 				targetMapping += eClassNode
 
-				targetFinderExpression = '''self«TO_EMDE_CLASSES»'''.trimAql
+				targetFinderExpression = '''self.getEmdeExtensions()'''.trimAql
 
 				style = [
 					endsCentering = CenteringStyle.NONE
@@ -146,7 +139,6 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 			// ownedTools += TODO hide Content		
 			ownedTools += ToolDescription.createAs(Ns.operation, "HideContent") [
 				label = "%capellavp.entities.hideContent"
-				label = "Hide content"
 				forceRefresh = true
 				iconPath = "/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif"
 				precondition = '''
@@ -156,16 +148,16 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 				element = ElementVariable.create("element")
 				elementView = ElementViewVariable.create("elementView")
 				operation = "var:elementView".toContext('''
-						self.ownedElements
-						  ->filter(«DNodeListElement.asAql»)
-						  ->select(it | not it.graphicalFilters
-						    ->exists(f | f«isInstanceAql(HideFilter)»))
+					self.ownedElements
+					  ->filter(«DNodeListElement.asAql»)
+					  ->select(it | not it.graphicalFilters
+					    ->exists(f | f«isInstanceAql(HideFilter)»))
 					'''.trimAql.forDo(
 						DPKG.DDiagramElement_GraphicalFilters.creator(HideFilter)
 					),
 					'''
-						self.outgoingEdges
-						  ->select(it | it.target«isInstanceAql(EReference)»)
+					self.outgoingEdges
+					  ->select(it | it.target«isInstanceAql(EReference)»)
 					'''.trimAql.forDo(
 						DPKG.DDiagramElement_GraphicalFilters.creator(HideFilter)
 					)
@@ -174,45 +166,48 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 			
 			ownedTools += ToolDescription.createAs(Ns.operation, "ShowContent") [
 				initVariables
-				label = "%capellavp.entities.hideContent"
-				label = "Show content"
+				label = "%capellavp.entities.showContent"
 				forceRefresh = true
 				iconPath = "/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif"
 				precondition = '''
 					element«isInstanceAql(EClass)»
 					  and elementView«isInstanceAql(DNodeList)»
 					'''.trimAql
-				operation = "var:elementView".toContext('''
-						self.ownedElements
-						  ->filter(«DNodeListElement.asAql»)
-						  .graphicalFilters
-						  ->filter(«HideFilter.asAql»)
+				operation = "var:elementView".toContext(
+					'''
+					self.ownedElements
+					  ->filter(«DNodeListElement.asAql»)
+					  .graphicalFilters
+					  ->filter(«HideFilter.asAql»)
 					'''.trimAql.forDo(
 						RemoveElement.create
 					),
 					'''
-						self.outgoingEdges
-						  ->select(it | it.target«isInstanceAql(EReference)»)
-						  .graphicalFilters
-						  ->filter(«HideFilter.asAql»)
+					self.outgoingEdges
+					  ->select(it | it.target«isInstanceAql(EReference)»)
+					  .graphicalFilters
+					  ->filter(«HideFilter.asAql»)
 					'''.trimAql.forDo(
 						RemoveElement.create
 					)
 				)
 			]
 			
-			ownedTools += OperationAction.createAs(Ns.operation, "Show Extended Classes") [
+			ownedTools += OperationAction.createAs(Ns.operation, "ShowExtendedClasses") [
+				initVariables
+				
+				label = "%capellavp.entities.showExtended"
 				forceRefresh = true
+				// precondition ='''elementView.toVsmDebug('')«isInstanceAql(DDiagram)»'''.trimAql
+				precondition ='''elementView«isInstanceAql(DDiagram)»'''.trimAql
 				icon = "/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif"
-				view = ContainerViewVariable.create("views")
 				operation = 
 					'''
 					diagram.getDisplayedEClassifiers()->filter(ecore::EClass)
 					'''.trimAql.letDo("classes", 
-						'''classes«TO_EMDE_CLASSES» - classes'''.trimAql.forDo(
+						'''classes.getEmdeExtensions() - classes'''.trimAql.forDo(
 							"service:markForAutosize".toContext(
-								eClassMapping
-									.viewDo("diagram")
+								eClassMapping.viewDo("diagram")
 							)
 						)
 					)
@@ -232,21 +227,19 @@ class EntitiesDiagramExtension extends SiriusDiagramExtension {
 				initVariables
 				connectionStartPrecondition = '''not preSource.isInLibrary()'''.trimAql
 				precondition = '''
-					preTarget.eAllSuperTypes->exists(it | it.name = 'ExtensibleElement')
-					  and not preSource«TO_EMDE_CLASSES»
-					    ->includes(preTarget)
-				'''.trimAql
+					preTarget.eAllSuperTypes
+					  ->exists(it | it.name = 'ExtensibleElement')
+					    and not preSource.getEmdeExtensions()->includes(preTarget)
+					'''.trimAql
 			
-				operation = "source.addEmdeExtensions(target)".trimAql.toOperation()
+				operation = "source.addEmdeExtension(target)".trimAql.toOperation()
 			]
 			ownedTools += DeleteElementDescription.createAs(Ns.del, "emdeExtensionDel")[
 				initVariables
 				operation = '''
-					let target = elementView.targetNode.target in
-					elementView.sourceNode.target.eAnnotations
-					  ->select(it | it.isEmdeConstraintExtensionOf(target)
-					    or it.isEmdeMappingExtensionOf(target))
-					'''.trimAql.forDo(RemoveElement.create)
+					elementView.sourceNode.target
+					  .removeEmdeExtension(elementView.targetNode.target)
+					'''.trimAql.toOperation
 			]
 		]
 	}

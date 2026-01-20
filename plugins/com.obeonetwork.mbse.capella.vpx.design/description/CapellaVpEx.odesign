@@ -6,7 +6,7 @@
       <metamodel href="http://www.eclipse.org/emf/2002/Ecore#/"/>
       <metamodel href="http://www.eclipse.org/emf/2002/GenModel#/"/>
       <layers name="Capella Extension" label="%capellavp.entities.layer" icon="/com.obeonetwork.mbse.capella.vpx.design/icons/Viewpoint.gif" activeByDefault="true">
-        <edgeMappings name="emdeExtension" deletionDescription="//@ownedViewpoints[name='CapellaVp']/@ownedRepresentationExtensions[name='EntitiesDiagramExtension']/@layers[name='Capella%20Extension']/@toolSections.1/@ownedTools[name='emdeExtensionDel']" targetFinderExpression="aql:self.eAnnotations ->select(it | it.source = 'http://www.polarsys.org/kitalpha/emde/1.0.0/constraintMapping') .getEmdeAnnotationElement()">
+        <edgeMappings name="emdeExtension" deletionDescription="//@ownedViewpoints[name='CapellaVp']/@ownedRepresentationExtensions[name='EntitiesDiagramExtension']/@layers[name='Capella%20Extension']/@toolSections.1/@ownedTools[name='emdeExtensionDel']" targetFinderExpression="aql:self.getEmdeExtensions()">
           <sourceMapping xsi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
           <targetMapping xsi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
           <style targetArrow="OutputFillClosedArrow" routingStyle="manhattan">
@@ -14,7 +14,7 @@
           </style>
         </edgeMappings>
         <toolSections name="Existing Elements">
-          <ownedTools xsi:type="tool:ToolDescription" name="HideContent" label="Hide content" precondition="aql:element.oclIsKindOf(ecore::EClass) and elementView.oclIsKindOf(diagram::DNodeList)" forceRefresh="true" iconPath="/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif">
+          <ownedTools xsi:type="tool:ToolDescription" name="HideContent" label="%capellavp.entities.hideContent" precondition="aql:element.oclIsKindOf(ecore::EClass) and elementView.oclIsKindOf(diagram::DNodeList)" forceRefresh="true" iconPath="/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
@@ -28,7 +28,7 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:ToolDescription" name="ShowContent" label="Show content" precondition="aql:element.oclIsKindOf(ecore::EClass) and elementView.oclIsKindOf(diagram::DNodeList)" forceRefresh="true" iconPath="/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif">
+          <ownedTools xsi:type="tool:ToolDescription" name="ShowContent" label="%capellavp.entities.showContent" precondition="aql:element.oclIsKindOf(ecore::EClass) and elementView.oclIsKindOf(diagram::DNodeList)" forceRefresh="true" iconPath="/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
@@ -42,11 +42,11 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
-          <ownedTools xsi:type="tool:OperationAction" name="Show Extended Classes" forceRefresh="true" icon="/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif">
+          <ownedTools xsi:type="tool:OperationAction" name="ShowExtendedClasses" label="%capellavp.entities.showExtended" precondition="aql:elementView.oclIsKindOf(diagram::DDiagram)" forceRefresh="true" icon="/org.eclipse.emf.ecoretools.design/icons/full/etools16/search.gif">
             <view name="views"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool:Let" variableName="classes" valueExpression="aql:diagram.getDisplayedEClassifiers()->filter(ecore::EClass)">
-                <subModelOperations xsi:type="tool:For" expression="aql:classes.eAnnotations ->select(it | it.source = 'http://www.polarsys.org/kitalpha/emde/1.0.0/constraintMapping') .getEmdeAnnotationElement() - classes">
+                <subModelOperations xsi:type="tool:For" expression="aql:classes.getEmdeExtensions() - classes">
                   <subModelOperations xsi:type="tool:ChangeContext" browseExpression="service:markForAutosize">
                     <subModelOperations xsi:type="tool_1:CreateView" containerViewExpression="aql:diagram">
                       <mapping xsi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
@@ -58,13 +58,13 @@
           </ownedTools>
         </toolSections>
         <toolSections name="Relation">
-          <ownedTools xsi:type="tool_1:EdgeCreationDescription" name="emdeExtensionCreate" label="Extension" precondition="aql:preTarget.eAllSuperTypes->exists(it | it.name = 'ExtensibleElement') and not preSource.eAnnotations ->select(it | it.source = 'http://www.polarsys.org/kitalpha/emde/1.0.0/constraintMapping') .getEmdeAnnotationElement() ->includes(preTarget)" edgeMappings="//@ownedViewpoints[name='CapellaVp']/@ownedRepresentationExtensions[name='EntitiesDiagramExtension']/@layers[name='Capella%20Extension']/@edgeMappings[name='emdeExtension']" iconPath="/com.obeonetwork.mbse.capella.vpx.design/icons/extension.png" connectionStartPrecondition="aql:not preSource.isInLibrary()">
+          <ownedTools xsi:type="tool_1:EdgeCreationDescription" name="emdeExtensionCreate" label="Extension" precondition="aql:preTarget.eAllSuperTypes ->exists(it | it.name = 'ExtensibleElement') and not preSource.getEmdeExtensions()->includes(preTarget)" edgeMappings="//@ownedViewpoints[name='CapellaVp']/@ownedRepresentationExtensions[name='EntitiesDiagramExtension']/@layers[name='Capella%20Extension']/@edgeMappings[name='emdeExtension']" iconPath="/com.obeonetwork.mbse.capella.vpx.design/icons/extension.png" connectionStartPrecondition="aql:not preSource.isInLibrary()">
             <sourceVariable name="source"/>
             <targetVariable name="target"/>
             <sourceViewVariable name="sourceView"/>
             <targetViewVariable name="targetView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="aql:source.addEmdeExtensions(target)"/>
+              <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="aql:source.addEmdeExtension(target)"/>
             </initialOperation>
           </ownedTools>
           <ownedTools xsi:type="tool_1:DeleteElementDescription" name="emdeExtensionDel">
@@ -72,9 +72,7 @@
             <elementView name="elementView"/>
             <containerView name="containerView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool:For" expression="aql:let target = elementView.targetNode.target in elementView.sourceNode.target.eAnnotations ->select(it | it.isEmdeConstraintExtensionOf(target) or it.isEmdeMappingExtensionOf(target))">
-                <subModelOperations xsi:type="tool:RemoveElement"/>
-              </firstModelOperations>
+              <firstModelOperations xsi:type="tool:ChangeContext" browseExpression="aql:elementView.sourceNode.target .removeEmdeExtension(elementView.targetNode.target)"/>
             </initialOperation>
           </ownedTools>
         </toolSections>
