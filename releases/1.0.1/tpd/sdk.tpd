@@ -1,0 +1,24 @@
+/*******************************************************************************
+
+  Copyright (c) 2024 Obeo. All rights reserved.
+
+  Contributors: 
+    Obeo - initial API and implementation.
+
+ *******************************************************************************/
+target "Capella Viewpoint Extension tools - SDK" 
+
+//
+// Target platform for development
+// 
+
+// It includes source of dependencies and plugins to launch a client runtime
+
+with requirements, source
+// Source is transitive to all included elements.
+
+environment JavaSE-11
+
+include "build.tpd"
+
+include "dev.tpd"

@@ -1,0 +1,76 @@
+/*******************************************************************************
+
+  Copyright (c) 2024 Obeo. All rights reserved.
+
+  Contributors: 
+    Obeo - initial API and implementation.
+
+ *******************************************************************************/
+target "Eclipse Platform 2021-06"
+
+location eclipse "https://download.eclipse.org/releases/2021-06/" {
+    org.eclipse.platform.feature.group
+    // includes rcp, e4.rcp, p2, osgi
+    // org.eclipse.equinox.sdk.feature.group
+
+    org.eclipse.epp.mpc.feature.group // Market Place
+    
+    // JGit & EGit 5.4.0
+    org.eclipse.egit.feature.group // include jgit
+
+    org.eclipse.emf.feature.group 
+    // Includes common, ecore.*, 
+    // This includes codegen which drags jdt !
+
+    org.eclipse.emf.transaction.sdk.feature.group
+    // include validation.sdf, emf.workspace
+    
+    org.eclipse.eef.sdk.feature.feature.group
+    org.eclipse.eef.ext.widgets.reference.feature.feature.group
+}
+
+// From Capella 6.1 (not release train)
+location GMF-Notation-1.13.1 "https://download.eclipse.org/modeling/gmp/gmf-notation/updates/releases/R202211151334" {
+    org.eclipse.gmf.runtime.notation.sdk.feature.group
+}
+
+// From Capella 6.1 (not release train)
+location GMF-Runtime-1.15.3 "https://download.eclipse.org/modeling/gmp/gmf-runtime/updates/releases/R202211041032/" {
+    org.eclipse.gmf.runtime.sdk.feature.group
+    org.eclipse.gmf.runtime.thirdparty.feature.group
+}
+
+// From Capella 6.1 (not release train)
+location GEF-Classic  "https://download.eclipse.org/tools/gef/classic/releases/3.15.0" {
+    org.eclipse.gef.feature.group
+    org.eclipse.gef.sdk.feature.group
+    org.eclipse.draw2d.sdk.feature.group
+	org.eclipse.draw2d.feature.group
+}
+
+// From Capella 6.1 (not release train)
+location sirius "https://download.eclipse.org/sirius/updates/releases/7.1.0/2021-06/" {
+    org.eclipse.sirius.diagram.elk.feature.feature.group
+    org.eclipse.sirius.diagram.elk.sdk.feature.feature.group
+    org.eclipse.sirius.doc.feature.feature.group
+    org.eclipse.sirius.interpreter.feature.feature.group
+    org.eclipse.sirius.properties.feature.feature.group
+    
+    org.eclipse.sirius.runtime.acceleo.feature.group
+    org.eclipse.sirius.runtime.aql.feature.group
+    org.eclipse.sirius.aql.feature.group
+    // org.eclipse.sirius.runtime.ide.eef.feature.group // EEF 1.x: Deprecated
+    org.eclipse.sirius.runtime.ide.ui.acceleo.feature.group
+    org.eclipse.sirius.runtime.ide.ui.feature.group
+    org.eclipse.sirius.runtime.ide.xtext.feature.group
+    org.eclipse.sirius.runtime.feature.group
+    org.eclipse.acceleo.query.feature.group
+    org.eclipse.acceleo.ui.interpreter.feature.group    
+}
+
+
+
+
+location eclipse-shared-license "http://download.eclipse.org/cbi/updates/license" {
+	org.eclipse.license.feature.group
+}
