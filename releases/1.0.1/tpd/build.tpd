@@ -1,0 +1,21 @@
+/*******************************************************************************
+
+  Copyright (c) 2024 Obeo. All rights reserved.
+
+  Contributors: 
+    Obeo - initial API and implementation.
+
+ *******************************************************************************/
+target "Capella Viewpoint Extension tools - Build" 
+
+// all classpath to compile and run tests
+
+with requirements
+
+environment JavaSE-11
+
+// Do not modify, do not include sources (useless)
+
+include "runtime.tpd"
+
+include "test.tpd"
